@@ -12,4 +12,9 @@ public class MainController {
         return "/hello";
 
     }
+
+    @RequestMapping("/welcome")
+        public String welcome(){
+            return "/welcome";
+        }
 }
