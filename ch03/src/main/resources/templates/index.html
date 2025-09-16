@@ -32,8 +32,34 @@
         <span th:if="${user4}">user4는 null이 아닙니다.</span>
         <span th:unless="${user4}">user4는 null이 아닙니다.</span>
     </p>
+
     <!-- 반복문 -->
+    <table border="1">
+        <tr th:each="user : ${dtoList}">
+            <td>[[${user.uid}]]</td>
+            <td>[[${user.name}]]</td>
+            <td th:text="${user.birth}">생년월일</td>
+            <td th:text="${user.age}">나이</td>
+        </tr>
+    </table>
+
     <!-- 링크 -->
+    <a th:href="@{/sub1/hello}">Hello</a>
+    <a th:href="@{/sub1/welcome}">Welcome</a>
+
     <!-- include -->
+    <th:block th:include="/inc/_head.html"/>
+    <th:block th:include="/inc/_tail.html"/>
+
+    <div th:insert="/inc/_head.html"></div>
+    <div th:insert="/inc/_tail.html"></div>
+
+    <div th:replace="/inc/_head.html"></div>
+    <div th:replace="/inc/_tail.html"></div>
+
+    <th:block th:include="~{/inc/template::_header}"/>
+    <th:block th:include="~{/inc/template::_footer}"/>
+
+    <!-- Thymeleaf Layout 찾아서 실습해보기 -->
 </body>
 </html>

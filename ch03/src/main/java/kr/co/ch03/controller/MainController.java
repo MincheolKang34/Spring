@@ -43,7 +43,6 @@ public class MainController {
         dtoList.add(user1);
         dtoList.add(user2);
         dtoList.add(user3);
-        dtoList.add(user4);
 
         model.addAttribute("str1", str1);
         model.addAttribute("str2", str2);
