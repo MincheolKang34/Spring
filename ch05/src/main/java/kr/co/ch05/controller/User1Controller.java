@@ -27,8 +27,9 @@ public class User1Controller {
     public String register(User1DTO user1DTO){
         System.out.println(user1DTO);
 
+        service.regist(user1DTO);
 
-        return null;
+        return "redirect:/user1/list";
     }
 
     @RequestMapping("/user1/list")
@@ -42,9 +43,9 @@ public class User1Controller {
     }
 
     @GetMapping("/user1/modify")
-    public String modify(@RequestParam("uid") String uid, Model model){
+    public String modify(@RequestParam("userId") String userId, Model model){
 
-        User1DTO user1DTO = service.findById(uid);
+        User1DTO user1DTO = service.findById(userId);
 
         model.addAttribute(user1DTO);
 
@@ -58,8 +59,8 @@ public class User1Controller {
     }
 
     @GetMapping("/user1/delete")
-    public String delete(String uid) {
-        service.delete(uid);
+    public String delete(String userId) {
+        service.delete(userId);
         return "redirect:/user1/list";
     }
 }
