@@ -1,7 +1,7 @@
 package kr.co.ch04.mapper;
 
 import kr.co.ch04.dto.User1DTO;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -9,6 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
 class User1MapperTest {
 
@@ -17,6 +18,8 @@ class User1MapperTest {
 
     private String userid = "abc2002";
 
+    @Order(1)
+    @DisplayName("등록 테스트")
     @Test
     void insert() {
         // Given - 테스트를 실행하기 위한 준비 단계
@@ -35,6 +38,8 @@ class User1MapperTest {
         assertEquals(user1DTO.getUserId(), savedUser.getUserId());
     }
 
+    @Order(2)
+    @DisplayName("조회 테스트")
     @Test
     void select() {
         // Given
@@ -48,6 +53,8 @@ class User1MapperTest {
         assertEquals(userid, findUser.getUserId());
     }
 
+    @Order(5)
+    @DisplayName("전체 조회 테스트")
     @Test
     void selectAll() {
         // Given
@@ -61,6 +68,8 @@ class User1MapperTest {
         assertFalse(dtoList.isEmpty()); // 테스트 성공으로 출력
     }
 
+    @Order(3)
+    @DisplayName("수정 테스트")
     @Test
     void update() {
         // Given
@@ -79,6 +88,8 @@ class User1MapperTest {
         assertEquals(user1DTO, modifiedUser); // 객체 비교 DTO에 @Data 어노테이션 선언
     }
 
+    @Order(4)
+    @DisplayName("삭제 테스트")
     @Test
     void delete() {
         // Given
