@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 // Oracle에서는 COMMENT가 예약어이기 때문에 quotation을 붙이고 대소문자 구분을 해줘야함
+// 접두어(ex: TBL_Comment)를 붙이는 것을 권장
 @Table(name = "\"Comment\"")
 public class Comment {
     @Id

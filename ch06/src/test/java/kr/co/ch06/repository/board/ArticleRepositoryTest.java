@@ -59,7 +59,7 @@ class ArticleRepositoryTest {
         File file = File.builder()
                 .oName("매출자료2.xls")
                 .sName("asdf-1ldfl-m3392.xls")
-                .article(article)
+                .ano(1)
                 .build();
 
         fileRepository.save(file);

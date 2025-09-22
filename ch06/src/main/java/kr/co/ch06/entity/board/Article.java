@@ -31,7 +31,8 @@ public class Article {
     @JoinColumn(name = "author")
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "article")
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ano")
     private List<File> fileList;
 
     @CreationTimestamp
