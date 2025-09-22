@@ -32,4 +32,23 @@ public class User5Controller {
         model.addAttribute("dtoList",dtoList);
         return "/user5/list";
     }
+
+    @GetMapping("/user5/modify")
+    public String modify(String name, Model model){
+        User5DTO user5DTO = user5Service.getUser5(name);
+        model.addAttribute("user5DTO",user5DTO);
+        return "/user5/modify";
+    }
+
+    @PostMapping("/user5/modify")
+    public String modify(User5DTO user5DTO){
+        user5Service.modifyUser5(user5DTO);
+        return "redirect:/user5/list";
+    }
+
+    @GetMapping("/user5/delete")
+    public String delete(String name){
+        user5Service.deleteUser5(name);
+        return "redirect:/user5/list";
+    }
 }
