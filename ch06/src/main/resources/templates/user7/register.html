@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User7::Register</title>
+</head>
+<body>
+    <h3>User7::Register</h3>
+
+    <a th:href="@{/user7/list}">목록</a>
+    <form method="post" th:action="@{/user7/register}">
+        <table border="1">
+            <tr>
+                <td>이름</td>
+                <td><input type="text" name="name"></td>
+            </tr>
+            <tr>
+                <td>나이</td>
+                <td><input type="number" name="age"></td>
+            </tr>
+            <tr>
+                <td>이메일</td>
+                <td><input type="text" name="email"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="right">
+                    <input type="submit" value="등록하기">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
