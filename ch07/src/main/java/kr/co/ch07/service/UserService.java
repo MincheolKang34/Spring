@@ -22,10 +22,11 @@ public class UserService {
         return null;
     }
     public void save(UserDTO userDTO){
-        userRepository.save(userDTO.toEntity());
+        // 비밀번호 암호화
         String plain = userDTO.getPass();
         String encoded = passwordEncoder.encode(plain);
         userDTO.setPass(encoded);
+
         userRepository.save(userDTO.toEntity());
     }
 

@@ -27,4 +27,10 @@ public class UserController {
         userService.save(userDTO);
         return "redirect:/user/login";
     }
+    
+    @GetMapping("/user/info")
+    public String info(){
+        // 타임리프 시큐리티 속성으로 인증된 사용자 정보 출력
+        return "user/info";
+    }
 }
