@@ -54,12 +54,12 @@ class ArticleRepositoryTest {
     @Test
     void insertFileTest(){
         Article article = Article.builder()
-                .ano(1).build();
+                .ano(3).build();
 
         File file = File.builder()
                 .oName("매출자료2.xls")
                 .sName("asdf-1ldfl-m3392.xls")
-                .ano(1)
+                .ano(3)
                 .build();
 
         fileRepository.save(file);
