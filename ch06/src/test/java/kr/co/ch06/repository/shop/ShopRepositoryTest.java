@@ -1,5 +1,7 @@
 package kr.co.ch06.repository.shop;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kr.co.ch06.dto.ProductAggDTO;
@@ -123,17 +125,56 @@ public class ShopRepositoryTest {
 
     @Test
     public void test10() {
+        List<Customer> list = queryFactory
+                                .select(Projections.fields(
+                                        Customer.class,
+                                        qOrder.customer.custId,
+                                        qOrder.customer.name,
+                                        qOrder.customer.custId.count().as("orderCount")
+                                ))
+                                .from(qOrder)
+                                .where(qOrder.orderStatus.eq(1))
+                                .groupBy(qOrder.customer.custId, qOrder.customer.name)
+                                .having(qOrder.customer.custId.count().goe(2))
+                                .fetch();
 
+        System.out.println(list);
     }
 
     @Test
     public void test11() {
+        List<Tuple> list = queryFactory
+                        .select(qOrder, qCustomer)
+                        .from(qOrder)
+                        .join(qCustomer)
+                        .on(qOrder.customer.eq(qCustomer))
+                        .fetch();
 
+        System.out.println(list);
     }
 
     @Test
     public void test12() {
+        String name = "김유신";
+        Integer age = 21;
 
+        // 동적 쿼리 생성 객체
+        BooleanBuilder builder = new BooleanBuilder();
+
+        if (name != null) {
+            builder.and(qCustomer.name.eq(name));
+        }
+
+        if (age != null) {
+            builder.and(qCustomer.age.goe(age));
+        }
+
+        List<Customer> list =queryFactory
+                                .selectFrom(qCustomer)
+                                .where(builder)
+                                .fetch();
+
+        System.out.println(list);
     }
 
     @Test
