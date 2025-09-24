@@ -4,7 +4,8 @@ import jakarta.validation.constraints.*;
 import kr.co.ch08.entity.User2;
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor

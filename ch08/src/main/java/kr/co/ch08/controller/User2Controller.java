@@ -19,8 +19,11 @@ public class User2Controller {
 
     @PostMapping("/user2")
     public ResponseEntity<User2DTO> register(@Valid @RequestBody User2DTO user2DTO) {
+        log.info("User2DTO: {}", user2DTO);
         User2DTO savedUser = user2Service.register(user2DTO);
-        return ResponseEntity.status(HttpStatus.OK).body(savedUser);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(savedUser);
     }
 
     @GetMapping("/user2/{userid}")

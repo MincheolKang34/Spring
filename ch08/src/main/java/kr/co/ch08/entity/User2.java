@@ -7,6 +7,7 @@ import kr.co.ch08.dto.User2DTO;
 import lombok.*;
 
 @Getter
+@Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
