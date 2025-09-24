@@ -16,8 +16,10 @@ public class User1Service {
 
     private final User1Repository user1Repository;
 
-    public void save(User1DTO user1DTO) {
-        user1Repository.save(user1DTO.toEntity());
+    public User1DTO save(User1DTO user1DTO) {
+        // Entity 저장 후 저장된 Entity 반환
+        User1 savedUser1 =user1Repository.save(user1DTO.toEntity());
+        return savedUser1.toDTO(); 
     }
     public User1DTO getUser(String userid){
         Optional<User1> optUser1 = user1Repository.findById(userid);
@@ -32,13 +34,19 @@ public class User1Service {
                 .map(user1 -> user1.toDTO())
                 .toList();
     }
-    public void modify(User1DTO user1DTO){
+    public User1DTO modify(User1DTO user1DTO){
         User1 user1 = user1DTO.toEntity();
         if(user1Repository.existsById(user1DTO.getUserid())){
-            user1Repository.save(user1);
+            User1 modifiedUser1 = user1Repository.save(user1);
+            return modifiedUser1.toDTO();
         }
+        return null;
     }
-    public void remove(String userid){
-        user1Repository.deleteById(userid);
+    public boolean remove(String userid){
+        if(user1Repository.existsById(userid)) {
+            user1Repository.deleteById(userid);
+            return true;
+        }
+        return false;
     }
 }
