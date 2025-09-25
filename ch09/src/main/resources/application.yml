@@ -1,0 +1,33 @@
+logging:
+    file:
+        name: logs/ch09.log
+    level:
+        root: info
+mybatis:
+    mapper-locations: classpath:mappers/**/*.xml
+server:
+    servlet:
+        context-path: /ch09
+spring:
+    application:
+        name: ch09
+    datasource:
+        driver-class-name: oracle.jdbc.driver.OracleDriver
+        password: 1234
+        url: jdbc:oracle:thin:@//15.165.35.3:1522/XEPDB1
+        username: mincheolkang34
+    devtools:
+        livereload:
+            enabled: true
+    jpa:
+        hibernate:
+            ddl-auto: update
+            naming:
+                physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        properties:
+            hibernate:
+                format_sql: true
+                show_sql: true
+jwt:
+    issuer: mincheolkang34@gmail.com
+    secret: 657A9867B5474B4552C2D26B8A816341
