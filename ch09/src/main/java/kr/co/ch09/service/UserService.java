@@ -1,6 +1,7 @@
 package kr.co.ch09.service;
 
 import kr.co.ch09.dto.UserDTO;
+import kr.co.ch09.entity.User;
 import kr.co.ch09.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,13 +22,15 @@ public class UserService {
     public UserDTO getUser(String usid){
         return null;
     }
-    public void save(UserDTO userDTO){
+    public UserDTO save(UserDTO userDTO){
         // 비밀번호 암호화
         String plain = userDTO.getPass();
         String encoded = passwordEncoder.encode(plain);
         userDTO.setPass(encoded);
 
-        userRepository.save(userDTO.toEntity());
+        User savedUser = userRepository.save(userDTO.toEntity());
+
+        return savedUser.toDTO();
     }
 
     public void modify(){}

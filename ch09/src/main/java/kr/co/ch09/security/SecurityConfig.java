@@ -1,31 +1,34 @@
 package kr.co.ch09.security;
 
+import kr.co.ch09.jwt.JwtAuthenticationFilter;
+import kr.co.ch09.jwt.JwtProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
+    private final JwtProvider jwtProvider;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // 로그인 설정
-        http.formLogin(form -> form
-                .loginPage("/user/login")
-                .defaultSuccessUrl("/")
-                .failureForwardUrl("/user/login?error=true")
-                .usernameParameter("usid")
-                .passwordParameter("pass")
-        );
-
-        // 로그아웃 설정
-        http.logout(logout -> logout
-                .logoutUrl("/user/logout")
-                .invalidateHttpSession(true)
-                .logoutSuccessUrl("/user/login?logout=true"));
+        // 토큰 기반 인증 설정
+        http.httpBasic(HttpBasicConfigurer::disable)            // 기본 HTTP 인증 비활성
+                .formLogin(FormLoginConfigurer::disable)        // 폼 로그인 비활성
+                        .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
 
         // 인가 설정
         http.authorizeHttpRequests(authorize -> authorize
@@ -47,4 +50,8 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
 }
