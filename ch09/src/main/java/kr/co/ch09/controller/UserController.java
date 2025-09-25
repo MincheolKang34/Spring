@@ -8,6 +8,7 @@ import kr.co.ch09.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -60,5 +62,13 @@ public class UserController {
     public ResponseEntity<UserDTO> register(@RequestBody UserDTO userDTO){
         UserDTO savedUser = userService.save(userDTO);
         return ResponseEntity.ok(savedUser);
+    }
+
+    @PreAuthorize("hasRole('ADMIN') and hasRole('MANANGER')")
+    @GetMapping("/user")
+    public ResponseEntity<List<UserDTO>> list(){
+        List<UserDTO> dtoList = userService.getUsers();
+        log.info("list : "+dtoList);
+        return ResponseEntity.ok(dtoList);
     }
 }
