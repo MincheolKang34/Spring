@@ -64,7 +64,7 @@ public class UserController {
         return ResponseEntity.ok(savedUser);
     }
 
-    @PreAuthorize("hasRole('ADMIN') and hasRole('MANANGER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @GetMapping("/user")
     public ResponseEntity<List<UserDTO>> list(){
         List<UserDTO> dtoList = userService.getUsers();
